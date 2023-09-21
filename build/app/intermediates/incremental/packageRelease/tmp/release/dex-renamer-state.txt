@@ -1,0 +1,4 @@
+#Thu Sep 21 14:54:47 IST 2023
+base.0=G\:\\Projects\\el_Red\\build\\app\\intermediates\\dex\\release\\minifyReleaseWithR8\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
