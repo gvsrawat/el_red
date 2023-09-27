@@ -21,6 +21,7 @@ class CustomiseYourCardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<FileUploadProvider>(context);
     return Scaffold(
       backgroundColor: ElColors.greyBackgroundColor,
       body: SafeArea(
@@ -141,9 +142,9 @@ class CustomizeButton extends StatelessWidget {
                 .then((value) {
               ///removing selected image file from cache.
               fileProvider.setSelectedFile(null);
-              if (value != null && (value as bool)) {
-                zoomProvider.updateZoomLevel();
-              }
+
+              ///updating selected zoom/pan level
+              zoomProvider.updateZoomLevel();
             });
           },
           child: Container(

@@ -21,6 +21,6 @@ abstract class ElStrings {
   static const String editPhoto = "Edit Photo";
   static const String imageUploadedSuccessMessage =
       "Image Uploaded Successfully!";
-  static const String imageUploadFailedMessage = "Image Uploaded Failed.";
+  static const String imageUploadFailedMessage = "Image Upload Failed.";
   static const String almostThereText = "Almost there";
 }

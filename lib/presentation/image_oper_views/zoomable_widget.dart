@@ -38,9 +38,16 @@ class _ZoomWidgetState extends State<ZoomWidget>
 
   ///this method updates the zoom level which it receives from zoom provider that user saves, for all the screens.
   void _updateZoomLevel() {
-    if (mounted && _zoomProvider.zoomMatrix != null) {
+    if (mounted &&
+        (_zoomProvider.shouldRestZoom || _zoomProvider.zoomMatrix != null)) {
       setState(() {
-        _transformationController.value = _zoomProvider.zoomMatrix!;
+        var matrix4Ins = Matrix4.identity();
+        if (_zoomProvider.shouldRestZoom) {
+          _zoomProvider.setZoomMatrix(matrix4Ins);
+        }
+        _transformationController.value = _zoomProvider.shouldRestZoom
+            ? matrix4Ins
+            : _zoomProvider.zoomMatrix!;
       });
     }
   }

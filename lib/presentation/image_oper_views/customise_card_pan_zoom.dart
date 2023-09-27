@@ -60,9 +60,17 @@ class CustomiseCardPanZoom extends StatelessWidget {
                             margin: ElSizes.getCommonScreenPadding(),
                             child: CustomizeButton(
                                 onButtonTap: () => _fileUploadProvider
-                                    .selectImageOptions(context,
-                                        onSelectionDone: () =>
-                                            _fileUploadProvider.updateUi()))),
+                                        .selectImageOptions(context,
+                                            onSelectionDone: () {
+                                      ///if user selects the new image then resetting the zoom/pan level.
+                                      var zoomProvider =
+                                          Provider.of<ZoomProvider>(context,
+                                              listen: false);
+                                      zoomProvider.setShouldResetZoom(true);
+                                      zoomProvider.updateZoomLevel();
+                                      _fileUploadProvider.updateUi();
+                                      zoomProvider.setShouldResetZoom(false);
+                                    }))),
                         Expanded(
                           child: Container(
                             margin: const EdgeInsets.only(
@@ -228,12 +236,13 @@ class CustomiseCardPanZoom extends StatelessWidget {
   ///If user has selected new image then firstly that image is uploaded to backend and then we do fetch the same image
   ///and then user is redirected to previous screen, there user will see old image with zoom levels(if set by user).
   void _onSaveTap(BuildContext context) async {
+    var zoomProvider = Provider.of<ZoomProvider>(context, listen: false);
     onSuccess() {
-      Provider.of<ZoomProvider>(context, listen: false)
-          .updateZoomLevelOnSaveClick();
+      zoomProvider.updateZoomLevelOnSaveClick();
       Navigator.pop(context, true);
     }
 
+    ///upload file to the cloud and refreshing the cached image.
     if (_fileUploadProvider.selectedFile != null) {
       bool firstApiSucceed = await _fileUploadProvider
           .uploadImage(_fileUploadProvider.selectedFile!);
